@@ -203,7 +203,15 @@ class _SensingSprite(BaseSprite):
         super().__init__()
 
     def sensing_touchingobject_pointer(self):
-        pass
+        pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(pos):
+            x = pos[0] - self.rect.left
+            y = pos[1] - self.rect.top
+            color = self.image.get_at((x, y))
+            if color.a != 0:
+                return True
+        return False
+
     sensing_touchingobject_pointer.opcode="sensing_touchingobject"
     sensing_touchingobject_pointer.param="TOUCHINGOBJECTMENU"
     sensing_touchingobject_pointer.value="_mouse_"
@@ -216,6 +224,7 @@ class _SensingSprite(BaseSprite):
     sensing_touchingobject_edge.value="_edge_"
 
     def sensing_touchingobject_sprite(self, sprite):
+        sprite = sprite._core
         if sprite.rect.colliderect(self.rect):
             offset = (self.rect.left - sprite.rect.left, self.rect.top - sprite.rect.top)
             return sprite.mask.overlap(self.mask, offset) is not None
