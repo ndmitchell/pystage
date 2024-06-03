@@ -214,9 +214,3 @@ class BubbleManager():
         if self.bubble:
             self.bubble.kill()
             self.bubble = None
-
-    def kill(self):
-        if self.bubble:
-            self.bubble.kill()
-            self.bubble = None
-
