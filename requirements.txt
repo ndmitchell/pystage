@@ -10,7 +10,6 @@ packaging==23.1
 Pillow==10.0.0
 pluggy==1.2.0
 pygame==2.5.0
--e git+ssh://git@github.com/Zhonglin-Niu/pystage.git@853294c0c7cdbac4ca189c386bc3f07fba4bd6f3#egg=pystage
 pytest==7.4.0  # for running tests
 reportlab==4.0.4
 svglib==1.5.1
