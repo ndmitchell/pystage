@@ -197,10 +197,10 @@ class _LooksSprite(_Looks):
 
 
     def looks_thinkforsecs(self, text, secs):
-        pass
+        self.bubble_manager.thinkforsecs(text, secs)
 
     def looks_think(self, text):
-        self.bubble_manager.say(text, Bubble.THINK)
+        self.bubble_manager.think(text)
 
     def looks_switchcostumeto(self, costume):
         self.costume_manager.switch_costume(costume)

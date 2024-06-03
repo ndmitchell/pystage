@@ -42,7 +42,21 @@ templates = {
                 {{CURRENT_SPRITE}}.{{func}}({{func}}_{{ID}})
                 
                 ''',
+
+        "event_whengreaterthan": '''\
+                def {{func}}_{{ID}}(self):
+                    {{NEXT | indent(4)}}
+                {{CURRENT_SPRITE}}.{{func}}({{VALUE}}, {{func}}_{{ID}})
                 
+                ''',
+
+        "event_whenbackdropswitchesto": '''\
+                def {{func}}_{{ID}}(self):
+                    {{NEXT | indent(4)}}
+                {{CURRENT_SPRITE}}.{{func}}({{BACKDROP | global_backdrop}}, {{func}}_{{ID}})
+                
+                ''',
+
         "control_start_as_clone": '''\
 
                 def {{func}}_{{ID}}(self):
@@ -106,6 +120,8 @@ templates = {
         "sound_sounds_menu": "{{SOUND_MENU | global_sound }}",
 
         "sensing_keyoptions": "{{KEY_OPTION}}",
+        "sensing_distancetomenu": "{{DISTANCETOMENU | global_sprite}}",
+        "sensing_touchingobjectmenu": "{{TOUCHINGOBJECTMENU | global_sprite}}",
 
                 }
 

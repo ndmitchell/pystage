@@ -50,8 +50,9 @@ class SpriteGroup(pygame.sprite.OrderedUpdates):
         new_index = index + value
         if new_index < 0:
             new_index = 0
-        if new_index > len(self._spritelist) - 1:
-            new_index = len(self._spritelist) - 1
+        # because the sprite was already removed above, so don't need to minus 1 for the length
+        if new_index > len(self._spritelist):
+            new_index = len(self._spritelist)
         self._spritelist.insert(new_index, sprite)
         # print(self._spritelist)
 
@@ -141,6 +142,9 @@ class CoreStage(
 
     def _update(self, dt):
         self.code_manager._update(dt)
+        # Update it so that the layering is correct while drawing
+        # otherwise the no effect for to_front, to_back, etc.
+        self._update_visible()
 
     def _draw(self, surface: pygame.Surface):
         surface.fill(self.background_color)
@@ -155,6 +159,11 @@ class CoreStage(
         This runs the game loop
         """
         dt = 0
+
+        # maybe we should move this to other place
+        left_clicking_and_holding = False
+        clicked_sprite = None
+
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -166,9 +175,11 @@ class CoreStage(
                         for sprite in self.sprites:
                             assert(isinstance(sprite, CoreSprite))
                             sprite.code_manager.process_key_pressed(event.key)
-                if event.type == pygame.MOUSEBUTTONUP:
+                # to make it consistent with Scratch, should be BUTTONDOWN
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.Vector2(pygame.mouse.get_pos())
-                    for sprite in self.visible_sprites.sprites()[-1:0:-1]:
+                    # [-1:0:-1] will reverse the list, but not include 0
+                    for sprite in self.visible_sprites.sprites()[-1::-1]:
                         assert(isinstance(sprite, CoreSprite))
                         if sprite.rect.collidepoint(pos):
                             internal_pos = pos - sprite.rect.topleft
@@ -179,6 +190,27 @@ class CoreStage(
                                 continue
                             sprite.code_manager.process_click()
                             break
+
+                # with these three conditions, we can detect a click and hold, 
+                # but not move the mouse while holding
+                if event.type == pygame.MOUSEBUTTONDOWN and not left_clicking_and_holding and pygame.mouse.get_pressed()[0]:
+                    pos = pygame.mouse.get_pos()
+                    for sprite in filter(lambda s:s.draggable, self.visible_sprites.sprites()[-1::-1]):
+                        assert(isinstance(sprite, CoreSprite))
+                        sprite_rect = sprite.image.get_rect()
+                        sprite_rect.topleft = sprite.rect.topleft
+                        if sprite_rect.collidepoint(pos):
+                            clicked_pos = pos[0] - sprite_rect.left, pos[1] - sprite_rect.top
+                            if sprite.image.get_at(clicked_pos).a != 0:
+                                left_clicking_and_holding = True
+                                clicked_sprite = sprite
+
+            if not pygame.mouse.get_pressed()[0] and left_clicking_and_holding:
+                left_clicking_and_holding = False
+
+            if left_clicking_and_holding:
+                assert isinstance(clicked_sprite, CoreSprite)
+                clicked_sprite.motion_goto_pointer()
 
             # Handle broadcast messages
             for message in self.message_broker.get_messages():
