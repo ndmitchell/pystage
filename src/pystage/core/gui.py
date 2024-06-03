@@ -205,9 +205,6 @@ class BubbleManager():
         self.sprite.code_manager.current_block.saying = True
         self.sprite.code_manager.current_block.add_to_wait_time = secs
 
-    def think(self, text: str):
-        self.say(text, Bubble.THINK)
-
     def thinkforsecs(self, text: str, secs: int):
         self.think(text)
         self.sprite.code_manager.current_block.saying = True
@@ -218,4 +215,8 @@ class BubbleManager():
             self.bubble.kill()
             self.bubble = None
 
+    def kill(self):
+        if self.bubble:
+            self.bubble.kill()
+            self.bubble = None
 
