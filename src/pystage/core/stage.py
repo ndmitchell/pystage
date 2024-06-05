@@ -77,6 +77,8 @@ class CoreStage(
 
         # This way, code blocks can consistently refer to the stage with self.stage:
         self.stage = self
+        # Make sure that the core sprite can always be accessed via _core
+        self._core = self
         # Above attributes need to be set first so that mixins can access them properly
         super().__init__()
         # The facade is the translated API
