@@ -4,8 +4,6 @@ import sys
 import io
 import pygame
 import pkg_resources
-from svglib.svglib import svg2rlg
-from reportlab.graphics import renderPM
 import pystage
 
 _round = lambda v: pygame.Vector2(round(v.x), round(v.y))
@@ -21,6 +19,7 @@ class CostumeManager():
         self.costumes = []
         self.current_costume = -1
         self.rotation_style = CostumeManager.ALL_AROUND
+
 
     def add_costume(self, name, center_x=None, center_y=None, factor=1):
         if isinstance(name, str):
@@ -160,17 +159,10 @@ class Costume():
                 break
         if self.file is None:
             self.file = pkg_resources.resource_filename("pystage", "images/zombie_idle.png")
-        # if self.file.endswith(".svg"):
-        #     print(f"Converting SVG file: {self.file}")
-        #     print("\nWARNING: SVG conversion is for convenience only")
-        #     print("and might not work as expected. It is recommended")
-        #     print("to manually convert to bitmap graphics (png or jpg).\n")
-        #     # Deactivated for now because of Windows problems. See issue #10
-        #     # with stderr_redirector(io.BytesIO()):
-        #     rlg = svg2rlg(self.file)
-        #     pil = renderPM.drawToPIL(rlg)
-        #     self.image = pygame.image.frombuffer(pil.tobytes(), pil.size, pil.mode)
-        # else:
+        if self.file.endswith(".svg"):
+            print("\nWARNING: SVG conversion is for convenience only")
+            print("and might not work as expected. It is recommended")
+            print("to manually convert to bitmap graphics (png or jpg).\n")
         self.image = pygame.image.load(self.file)
         if factor!=1:
             self.image = pygame.transform.rotozoom(self.image, 0, 1.0/factor)
