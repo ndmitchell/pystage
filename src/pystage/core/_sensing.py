@@ -34,7 +34,8 @@ class _Sensing(BaseSprite):
 
     def sensing_loudness(self):
         # See events area, not sure if we support microphone access
-        pass
+        # This could be useful: https://python-sounddevice.readthedocs.io/en/0.4.7/index.html
+        print("Microphone access is currently not supported. See https://github.com/pystage/pystage/issues/116")
 
     def sensing_timer(self):
         return self.stage.timer
