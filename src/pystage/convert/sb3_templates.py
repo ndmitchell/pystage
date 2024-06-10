@@ -122,7 +122,7 @@ templates = {
         "sensing_keyoptions": "{{KEY_OPTION}}",
         "sensing_distancetomenu": "{{DISTANCETOMENU | global_sprite}}",
         "sensing_touchingobjectmenu": "{{TOUCHINGOBJECTMENU | global_sprite}}",
-
+        "control_create_clone_of_menu": "{{CLONE_OPTION | global_sprite}}",
                 }
 
 

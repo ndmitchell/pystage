@@ -26,6 +26,7 @@ class CodeManager():
         # message: [name, ...]
         self.broadcast_blocks = {}
         self.clicked_blocks = []
+        self.cloned_blocks = []
         # Name of the code block currently executed.
         # This way, state about the current execustion
         # can be stored safely where it belongs
@@ -66,6 +67,14 @@ class CodeManager():
             self.current_block = self.code_blocks[name]
             self.code_blocks[name].update(dt)
 
+    def clone(self, owner):
+        clone = CodeManager(owner)
+        for name in self.code_blocks:
+            code_block = self.code_blocks[name]
+            cloned_block = clone.register_code_block(code_block.generator_function, "clone", code_block.no_refresh)
+            if code_block in self.cloned_blocks:
+                clone.cloned_blocks.append(cloned_block)
+        return clone
 
 class CodeBlock():
     '''
