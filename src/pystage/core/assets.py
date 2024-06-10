@@ -150,7 +150,17 @@ class Costume():
         self.file = None
         self.name = name
         internal_folder = pkg_resources.resource_filename("pystage", "images/")
-        for folder in ["", "images/", "bilder/", internal_folder]:
+        # Add further folders for translations here
+        named_folders = ["", "images/", "bilder/"]
+        # Folders relative to CWD
+        search_folders = named_folders.copy()
+        # Folders relative to python script
+        for folder in named_folders:
+            search_folders.append(os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), folder))
+        # Internal default sprites
+        search_folders.append(internal_folder)
+
+        for folder in search_folders:
             for ext in ["", ".bmp", ".png", ".jpg", ".jpeg", ".gif", ".svg"]:
                 if os.path.exists(f"{folder}{name}{ext}"):
                     self.file = f"{folder}{name}{ext}"
@@ -205,7 +215,17 @@ class Sound():
         self.file = None
         self.sound = None
         internal_folder = pkg_resources.resource_filename("pystage", "sounds/")
-        for folder in ["", "sounds/", "klaenge/", internal_folder]:
+        # Add further folders for translations here
+        named_folders = ["", "sounds/", "klaenge/"]
+        # Folders relative to CWD
+        search_folders = named_folders.copy()
+        # Folders relative to python script
+        for folder in named_folders:
+            search_folders.append(os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), folder))
+        # Internal default sprites
+        search_folders.append(internal_folder)
+
+        for folder in search_folders:
             for ext in ["", ".wav", ".ogg", ".mp3"]:
                 if os.path.exists(f"{folder}{name}{ext}"):
                     self.file = f"{folder}{name}{ext}"
