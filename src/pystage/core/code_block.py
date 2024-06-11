@@ -6,6 +6,10 @@ from pystage.l10n.api import get_core_function_from_instance
 # Functions that need to be yielded for screen refresh
 yield_funcs = [
     "control_wait",
+    # Stop needs to yield so that the next command is not executed
+    "control_stop_all",
+    "control_stop_this",
+    "control_stop_other",
     "sound_playuntildone",
     "motion_glidesecstoxy",
     "motion_glideto_random",
@@ -31,13 +35,11 @@ class CodeManager():
         # This way, state about the current execustion
         # can be stored safely where it belongs
         self.current_block: CodeBlock = None
-        self.running_blocks: list[CodeBlock] = []
         self.owner = owner
 
     def stop_running_blocks(self):
-        for block in self.running_blocks:
-            block.stop()
-        self.running_blocks = []
+        for name in self.code_blocks:
+            self.code_blocks[name].stop()
 
     def process_key_pressed(self, key):
         # key is a pygame constant, e.g. pygame.K_a
@@ -181,7 +183,6 @@ class CodeBlock():
         (Re-)start the code block. If the block is already started,
         the current execution will not continue.
         '''
-        self.sprite_or_stage.code_manager.running_blocks.append(self)
         self.running = True
         self.wait_time = 0
         if not self.is_function:
@@ -205,6 +206,7 @@ class CodeBlock():
             self.sprite_or_stage.bubble_manager.kill()
         if type(self.sprite_or_stage).__name__ == "CoreStage":
             self.sprite_or_stage.input_manager.cancel_asking()
+        print(f"Stop of {self.name} triggered.")
 
     def update(self, dt):
         '''
@@ -230,7 +232,6 @@ class CodeBlock():
                 self.generator = self.generator_function(target)
                 print(f"CodeBlock {self.name} has finished.")
                 self.running = False
-                self.sprite_or_stage.code_manager.running_blocks.remove(self)
                 return
             else:
                 try:
@@ -244,7 +245,6 @@ class CodeBlock():
                 except StopIteration:
                     print(f"CodeBlock {self.name} has finished.")
                     self.running = False
-                    self.sprite_or_stage.code_manager.running_blocks.remove(self)
         elif self.gliding:
             self.sprite_or_stage.motion_setx(
                 self.gliding_end_position[0] - (self.gliding_end_position[0] - self.gliding_start_position[0]) * (
