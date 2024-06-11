@@ -17,7 +17,7 @@ class Bühne():
         self._core.pystage_play()
         
             
-    def erzeuge_klon_von(self, sprite='_myself_'):
+    def erzeuge_klon_von_sprite(self, sprite='_myself_'):
         """erzeuge Klon von %1
 
         Translation string: erzeuge Klon von %1
@@ -34,7 +34,7 @@ class Bühne():
         -------
 
         """
-        return self._core.control_create_clone_of(sprite)
+        return self._core.control_create_clone_of_sprite(sprite)
                 
     def stoppe_alles(self):
         """stoppe alles

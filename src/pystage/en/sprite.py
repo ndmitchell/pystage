@@ -6,7 +6,7 @@ class Sprite:
         self._core: CoreSprite = core_sprite
         self._core.facade = self
 
-    def create_clone_of(self, sprite="_myself_"):
+    def create_clone_of_sprite(self, sprite="_myself_"):
         """create clone of %1
 
         Engl. Translation for your reference: ...
@@ -22,8 +22,22 @@ class Sprite:
         -------
 
         """
-        return self._core.control_create_clone_of(sprite)
+        return self._core.control_create_clone_of_sprite(sprite)
 
+    def create_clone_of_myself(self):
+        """create clone of myself
+
+        Engl. Translation for your reference: ...
+        Engl. Documentation when available...
+
+        
+
+        Returns
+        -------
+
+        """
+        return self._core.control_create_clone_of_myself()
+        
     def delete_this_clone(self):
         """delete this clone
 

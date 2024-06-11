@@ -9,7 +9,21 @@ class Figur():
 
 
             
-    def erzeuge_klon_von(self, sprite='_myself_'):
+    def erzeuge_klon_von_mir(self):
+        """erzeuge Klon von mir selbst
+
+        Translation string: erzeuge Klon von %1
+        Engl. Translation for your reference: ...
+        Engl. Documentation when available...
+
+        
+        Returns
+        -------
+
+        """
+        return self._core.control_create_clone_of_myself()
+                
+    def erzeuge_klon_von_sprite(self, sprite):
         """erzeuge Klon von %1
 
         Translation string: erzeuge Klon von %1
@@ -26,8 +40,8 @@ class Figur():
         -------
 
         """
-        return self._core.control_create_clone_of(sprite)
-                
+        return self._core.control_create_clone_of_sprite(sprite)
+
     def lösche_diesen_klon(self):
         """lösche diesen Klon
 

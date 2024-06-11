@@ -10,7 +10,8 @@ sprite1 = stage.add_a_sprite()
 
 def when_program_starts_1(self):
     for _ in range(10):
-        self.create_clone_of(sprite1)
+        self.create_clone_of_myself()
+        self.create_clone_of_sprite(sprite1)
 
 sprite1.when_program_starts(when_program_starts_1)
 

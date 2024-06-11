@@ -35,14 +35,13 @@ class _Control(BaseSprite):
     control_stop_other.value="other scripts in sprite"
 
     # Cloning is probably tricky.  
-
-    def control_create_clone_of(self, sprite="_myself_"):
+    def control_create_clone_of_sprite(self, sprite):
         print("Creating a clone of ", sprite)
         sprite._core.clone()
 
-    control_create_clone_of.translation = "control_createcloneof"
+    control_create_clone_of_sprite.opcode = "control_create_clone_of"
 
-
+    
 class _ControlSprite(_Control):
 
     number_of_clones = 0
@@ -50,6 +49,13 @@ class _ControlSprite(_Control):
     def __init__(self):
         super().__init__()
 
+    def control_create_clone_of_myself(self):
+        print("Creating a clone of myself")
+        self._core.clone()
+
+    control_create_clone_of_myself.opcode="control_create_clone_of"
+    control_create_clone_of_myself.param="CLONE_OPTION"
+    control_create_clone_of_myself.value="_myself_"
 
     def control_delete_this_clone(self):
         _ControlSprite.number_of_clones -= 1
