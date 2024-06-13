@@ -270,8 +270,8 @@ class CostumeManager():
             return image
         w, h = image.get_size()
         new_image = pygame.Surface((w, h), pygame.SRCALPHA)
-
-        image = pygame.transform.scale_by(image, 1/tiles)
+        new_size = pygame.Vector2(int(image.get_width() / tiles), int(image.get_height() / tiles))
+        image = pygame.transform.scale(image, new_size)
         copies = []
         for _ in range(tiles**2-1):
             copies.append(image.copy())
