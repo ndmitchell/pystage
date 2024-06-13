@@ -15,7 +15,7 @@ class Stage():
     def play(self):
         self._core.pystage_play()
 
-    def create_clone_of(self, sprite='_myself_'):
+    def create_clone_of_sprite(self, sprite='_myself_'):
         """create clone of %1
 
         Translation string: create clone of %1
@@ -32,7 +32,7 @@ class Stage():
         -------
 
         """
-        return self._core.control_create_clone_of(sprite)
+        return self._core.control_create_clone_of_sprite(sprite)
 
     def stop_all(self):
         """stop all

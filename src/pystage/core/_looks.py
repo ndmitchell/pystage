@@ -185,6 +185,7 @@ class _LooksSprite(_Looks):
     def __init__(self):
         super().__init__()
         self.bubble_manager = BubbleManager(self)
+        # Make sure to clone all properties in sprite.py that need to be cloned
         self.size = 100
         self.ghost = 0 # 0 - visible / 100 - transparent
         self.visible = True

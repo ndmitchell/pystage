@@ -63,6 +63,7 @@ class CodeWriter():
         self.jinja_environment.filters["global_sound"] = lambda name: self.global_sound(name)
         self.jinja_environment.filters["global_costume"] = lambda name: self.global_costume(name)
         self.jinja_environment.filters["global_backdrop"] = lambda name: self.global_backdrop(name)
+        self.jinja_environment.filters["global_sprite"] = lambda name: self.get_sprite_var(unquoted(name))
         
         logger.debug("CodeWriter created.")
 
@@ -285,7 +286,10 @@ class CodeWriter():
                 context["NEXT"] = "pass"
             if "SUBSTACK" in text and not context.get("SUBSTACK"):
                 context["SUBSTACK"] = "pass"
-
+            if "SUBSTACK2" in text and not context.get("SUBSTACK2"):
+                context["SUBSTACK2"] = "pass"
+        if "{{CONDITION}}" in text and not context.get("CONDITION"):
+            context["CONDITION"] = "None"
         template = self.jinja_environment.from_string(text)
         try:
             text = template.render(context)

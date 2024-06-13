@@ -6,7 +6,7 @@ class Sprite:
         self._core: CoreSprite = core_sprite
         self._core.facade = self
 
-    def create_clone_of(self, sprite="_myself_"):
+    def create_clone_of_sprite(self, sprite="_myself_"):
         """create clone of %1
 
         Engl. Translation for your reference: ...
@@ -22,8 +22,22 @@ class Sprite:
         -------
 
         """
-        return self._core.control_create_clone_of(sprite="_my_")
+        return self._core.control_create_clone_of_sprite(sprite)
 
+    def create_clone_of_myself(self):
+        """create clone of myself
+
+        Engl. Translation for your reference: ...
+        Engl. Documentation when available...
+
+        
+
+        Returns
+        -------
+
+        """
+        return self._core.control_create_clone_of_myself()
+        
     def delete_this_clone(self):
         """delete this clone
 
@@ -59,7 +73,7 @@ class Sprite:
 
         """
         return self._core.control_start_as_clone(
-            generator_function, name="", no_refresh=False
+            generator_function, name, no_refresh
         )
 
     def stop_all(self):
@@ -272,7 +286,7 @@ class Sprite:
 
         """
         return self._core.event_whenbackdropswitchesto(
-            backdrop, generator_function, name="", no_refresh=False
+            backdrop, generator_function, name, no_refresh
         )
 
     def when_i_receive_message(
@@ -297,7 +311,7 @@ class Sprite:
 
         """
         return self._core.event_whenbroadcastreceived(
-            message, generator_function, name="", no_refresh=False
+            message, generator_function, name, no_refresh
         )
 
     def when_program_starts(self, generator_function, name="", no_refresh=False):
@@ -319,7 +333,7 @@ class Sprite:
 
         """
         return self._core.event_whenflagclicked(
-            generator_function, name="", no_refresh=False
+            generator_function, name, no_refresh
         )
 
     def when_loudness_greater_than(
@@ -344,7 +358,7 @@ class Sprite:
 
         """
         return self._core.event_whengreaterthan_loudness(
-            value, generator_function, name="", no_refresh=False
+            value, generator_function, name, no_refresh
         )
 
     def when_timer_greater_than(
@@ -369,7 +383,7 @@ class Sprite:
 
         """
         return self._core.event_whengreaterthan_timer(
-            value, generator_function, name="", no_refresh=False
+            value, generator_function, name, no_refresh
         )
 
     def when_key_pressed(self, key, generator_function, name="", no_refresh=False):
@@ -392,7 +406,7 @@ class Sprite:
 
         """
         return self._core.event_whenkeypressed(
-            key, generator_function, name="", no_refresh=False
+            key, generator_function, name, no_refresh
         )
 
     def when_this_sprite_clicked(self, generator_function, name="", no_refresh=False):
@@ -414,7 +428,7 @@ class Sprite:
 
         """
         return self._core.event_whenthisspriteclicked(
-            generator_function, name="", no_refresh=False
+            generator_function, name, no_refresh
         )
 
     def backdrop_name(self):
