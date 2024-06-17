@@ -728,7 +728,34 @@ class Stage():
         -------
 
         """
-        return self._core.looks_switchbackdropto(backdrop)
+        return self._core.looks_switchbackdropto_backdrop(backdrop)
+
+    def switch_to_random_backdrop(self):
+        """switch to random backdrop
+
+        Returns
+        -------
+
+        """
+        return self._core.looks_switchbackdropto_random()
+
+    def switch_to_next_backdrop(self):
+        """switch to next backdrop
+
+        Returns
+        -------
+
+        """
+        return self._core.looks_switchbackdropto_next()
+
+    def switch_to_previous_backdrop(self):
+        """switch to previous backdrop
+
+        Returns
+        -------
+
+        """
+        return self._core.looks_switchbackdropto_previous()
 
     def switch_backdrop_to_and_wait(self, backdrop):
         """switch backdrop to %1 and wait

@@ -70,15 +70,6 @@ class CostumeManager():
         self.update_sprite_image()
 
     def switch_costume(self, name):
-        if name == "next backdrop":
-            self.next_costume()
-            return
-        if name == "previous backdrop":
-            self.previous_costume()
-            return
-        if name == "random backdrop":
-            self.random_costume()
-            return
         for i, costume in enumerate(self.costumes):
             if costume.name.lower().strip() == name.lower().strip():
                 self.current_costume = i

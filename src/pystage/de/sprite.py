@@ -1007,8 +1007,41 @@ class Figur():
         -------
 
         """
-        return self._core.looks_switchbackdropto(backdrop)
+        return self._core.looks_switchbackdropto_backdrop(backdrop)
                 
+    def wechsle_zu_zufälligem_bühnenbild(self):
+        """wechsle zu zufälligem Bühnenbild
+
+        Translation string: wechsle zu zufäBühnenbild
+        Engl. Translation for your reference: ...
+        Engl. Documentation when available...
+
+        
+        Returns
+        -------
+
+        """
+        return self._core.looks_switchbackdropto_random()
+
+    def wechsle_zum_vorherigen_bühnenbild(self):
+        """wechsle zum vorherigen Bühnenbild
+
+        Returns
+        -------
+
+        """
+        return self._core.looks_switchbackdropto_previous()
+
+    def wechsle_zum_nächsten_bühnenbild(self):
+        """wechsle zum nachfolgenden Bühnenbild
+
+
+        Returns
+        -------
+
+        """
+        return self._core.looks_switchbackdropto_next()
+
     def wechsle_zu_kostüm(self, costume):
         """wechsle zu Kostüm %1
 

@@ -7,10 +7,33 @@ class _Looks(BaseSprite):
     def __init__(self):
         super().__init__()
 
-    def looks_switchbackdropto(self, backdrop):
+    def looks_switchbackdropto_next(self):
+        self.stage.costume_manager.next_costume()
+
+    looks_switchbackdropto_next.opcode="looks_switchbackdropto"
+    looks_switchbackdropto_next.param="BACKDROP"
+    looks_switchbackdropto_next.value="next backdrop"
+
+    def looks_switchbackdropto_previous(self):
+        self.stage.costume_manager.previous_costume()
+
+    looks_switchbackdropto_previous.opcode="looks_switchbackdropto"
+    looks_switchbackdropto_previous.param="BACKDROP"
+    looks_switchbackdropto_previous.value="previous backdrop"
+
+    def looks_switchbackdropto_random(self):
+        self.stage.costume_manager.random_costume()
+
+    looks_switchbackdropto_random.opcode="looks_switchbackdropto"
+    looks_switchbackdropto_random.param="BACKDROP"
+    looks_switchbackdropto_random.value="random backdrop"
+
+    def looks_switchbackdropto_backdrop(self, backdrop):
         # Backdrops are for the stage.
         # In Scratch, a sprite can change the backdrop.
         self.stage.costume_manager.switch_costume(backdrop)
+    
+    looks_switchbackdropto_backdrop.opcode="looks_switchbackdropto"
 
     def looks_nextbackdrop(self):
         self.stage.costume_manager.next_costume()

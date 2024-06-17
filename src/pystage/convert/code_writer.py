@@ -139,12 +139,7 @@ class CodeWriter():
         if elsefunc:
             # print(f"Matching API method: {elsefunc}")
             return elsefunc
-        # if opcode ends with _menu, the scratch block has a dropdown menu
-        # with limited uneditable choices. E.g. "motion_goto" in scratch has
-        # two choices: "random" or "pointer". It is not an error if we haven't
-        # found a function for this opcode.
-        if not block.opcode.endswith("menu"):
-            print(f"No API method for {block.opcode}")
+        print(f"No API method for {block.opcode}")
         return None
 
 
