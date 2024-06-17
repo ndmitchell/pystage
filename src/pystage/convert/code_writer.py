@@ -233,6 +233,8 @@ class CodeWriter():
             if costume["local_name"] == name:
                 q = '"' if quoted else ''
                 return f'{q}{self.project["costumes"][costume["md5"]]["global_name"]}{q}'
+        if name in ["next backdrop", "random backdrop", "previous backdrop"]:
+            return f'"{name}"'
         raise ValueError(f"No backdrop with name '{name}' found for stage.")
 
 
@@ -273,7 +275,7 @@ class CodeWriter():
 
         # if {{NEXT | indent (4)}} is still in text, but there is no
         # NEXT in context, then it means the Scratch “hat” block is empty,
-        # so set NEXT to "pass", and the function is essentially empty.
+        # so set NEXT to "pass", so the function is essentially empty.
         if "indent(4)" in text:
             if "NEXT" in text and not context.get("NEXT"):
                 context["NEXT"] = "pass"
