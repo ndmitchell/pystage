@@ -837,7 +837,7 @@ class Stage():
         """
         return self._core.pystage_addbackdrop(name, center_x, center_y)
 
-    def pystage_addsound(self, name):
+    def add_sound(self, name):
         """
 
         Translation string: 

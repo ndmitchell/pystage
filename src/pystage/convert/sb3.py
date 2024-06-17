@@ -303,6 +303,7 @@ def get_python(project, language="core", project_link=None):
     add_backdrop = get_translated_function("pystage_addbackdrop", language, stage=True)
     add_costume = get_translated_function("pystage_addcostume", language)
     add_sound = get_translated_function("pystage_addsound", language)
+    add_sound_stage = get_translated_function("pystage_addsound", language, stage=True)
     add_variable = get_translated_function("pystage_makevariable", language)
     create_sprite = get_translated_function("pystage_createsprite", language, stage=True)
     play = get_translated_function("pystage_play", language, stage=True)
@@ -321,6 +322,7 @@ def get_python(project, language="core", project_link=None):
     writer.set_sprite(project["stage"]["name"])
     stage_var = writer.get_sprite_var()
     backdrops = []
+    sounds = [writer.global_sound(s["local_name"], False) for s in project["stage"]["sounds"]]
     for bd in project["stage"]["costumes"]:
         backdrops.append(writer.global_backdrop(bd["local_name"], False))
     res += textwrap.dedent(f'''\
@@ -329,6 +331,10 @@ def get_python(project, language="core", project_link=None):
     for bd in backdrops:
         res += textwrap.dedent(f'''\
                 {stage_var}.{add_backdrop}('{bd}')
+                ''')
+    for s in sounds:
+        res += textwrap.dedent(f'''\
+                {stage_var}.{add_sound_stage}('{s}')
                 ''')
     for v in project["stage"]["variables"]:
         res += textwrap.dedent(f'''\

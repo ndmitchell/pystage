@@ -70,6 +70,11 @@ class CostumeManager():
         self.update_sprite_image()
 
     def switch_costume(self, name):
+        # Scratch also supports numbers here
+        if type(name)==int:
+            self.current_costume = name % len(self.costumes)
+            self.update_sprite_image
+            return
         for i, costume in enumerate(self.costumes):
             if costume.name.lower().strip() == name.lower().strip():
                 self.current_costume = i
@@ -355,17 +360,24 @@ class Costume():
         for folder in search_folders:
             for ext in ["", ".bmp", ".png", ".jpg", ".jpeg", ".gif", ".svg"]:
                 if os.path.exists(f"{folder}{name}{ext}"):
-                    self.file = f"{folder}{name}{ext}"
-                    break
+                    # Check if the file can actually be loaded
+                    # It could e.g. be a directory with the same name as we allow no ending
+                    try:
+                        filename = f"{folder}{name}{ext}"
+                        self.image = pygame.image.load(filename)
+                        self.file = filename
+                        break
+                    except Exception:
+                        pass
             if self.file is not None:
                 break
         if self.file is None:
             self.file = pkg_resources.resource_filename("pystage", "images/zombie_idle.png")
+            self.image = pygame.image.load(self.file)
         if self.file.endswith(".svg"):
             print("\nWARNING: SVG conversion is for convenience only")
             print("and might not work as expected. It is recommended")
             print("to manually convert to bitmap graphics (png or jpg).\n")
-        self.image = pygame.image.load(self.file)
         if factor!=1:
             self.image = pygame.transform.rotozoom(self.image, 0, 1.0/factor)
         self.image = self.image.subsurface(self.image.get_bounding_rect()) 
