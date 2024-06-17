@@ -70,6 +70,11 @@ class CostumeManager():
         self.update_sprite_image()
 
     def switch_costume(self, name):
+        # Scratch also supports numbers here
+        if type(name)==int:
+            self.current_costume = name % len(self.costumes)
+            self.update_sprite_image
+            return
         for i, costume in enumerate(self.costumes):
             if costume.name.lower().strip() == name.lower().strip():
                 self.current_costume = i
